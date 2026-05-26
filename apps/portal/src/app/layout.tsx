@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import {
   Bebas_Neue,
   Barlow_Condensed,
@@ -68,7 +69,7 @@ export const metadata: Metadata = {
   description: 'Media analytics intelligence platform',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"

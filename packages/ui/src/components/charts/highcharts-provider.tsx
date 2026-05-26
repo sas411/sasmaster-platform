@@ -1,5 +1,6 @@
 'use client'
 
+import type React from 'react'
 import Highcharts from 'highcharts'
 import { useEffect } from 'react'
 
@@ -41,9 +42,8 @@ const SASMSTER_DARK_THEME: Highcharts.Options = {
     shadow: false,
   },
   plotOptions: {
-    series: {
-      borderRadius: 4,
-    },
+    column: { borderRadius: 4 },
+    bar: { borderRadius: 4 },
   },
   credits: { enabled: false },
   navigation: {

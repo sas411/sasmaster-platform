@@ -1,5 +1,6 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { NavBar, HighchartsProvider } from '@sasmaster/ui'
@@ -20,7 +21,7 @@ function activeFromPath(path: string): NavSection {
   return valid.includes(segment) ? segment : 'content'
 }
 
-export default function PortalLayout({ children }: { children: React.ReactNode }) {
+export default function PortalLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const [activeSection, setActiveSection] = useState<NavSection>(activeFromPath(pathname))

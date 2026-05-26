@@ -16,9 +16,9 @@ export function LineChart({ title, series, categories, height = 300, className }
   const options = useMemo<Highcharts.Options>(
     () => ({
       chart: { type: 'line', height },
-      title: title ? { text: title } : { text: undefined },
+      ...(title ? { title: { text: title } } : { title: { text: '' } }),
       xAxis: { categories },
-      yAxis: { title: { text: undefined } },
+      yAxis: { title: { text: '' } },
       series,
       legend: { enabled: series.length > 1 },
     }),

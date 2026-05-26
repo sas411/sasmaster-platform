@@ -1,1 +1,39 @@
-@import "@sasmaster/ui/styles";
+@import "tailwindcss";
+
+/* ── Design tokens ── */
+@import "@sasmaster/tokens";
+
+/* ── shadcn CSS var overrides → SaSMaster dark cinematic tokens ── */
+:root {
+  --background: var(--color-bg-base);
+  --foreground: var(--color-text-dark-primary);
+  --card: var(--color-bg-surface);
+  --card-foreground: var(--color-text-dark-primary);
+  --popover: var(--color-bg-elevated);
+  --popover-foreground: var(--color-text-dark-primary);
+  --primary: var(--color-brand-lavender);
+  --primary-foreground: var(--color-bg-base);
+  --secondary: var(--color-bg-elevated);
+  --secondary-foreground: var(--color-text-dark-secondary);
+  --muted: var(--color-bg-surface);
+  --muted-foreground: var(--color-text-dark-muted);
+  --accent: var(--color-brand-teal-dim);
+  --accent-foreground: var(--color-brand-teal);
+  --destructive: var(--color-brand-coral);
+  --destructive-foreground: var(--color-text-dark-primary);
+  --border: var(--color-border-dark);
+  --input: var(--color-bg-surface);
+  --ring: var(--color-brand-lavender);
+  --radius: var(--radius-card);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-dark-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

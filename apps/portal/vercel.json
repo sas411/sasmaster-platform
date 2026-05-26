@@ -1,6 +1,9 @@
 {
   "framework": "nextjs",
-  "installCommand": "cd ../.. && bun install",
+  "installCommand": "cd ../.. && bun install --frozen-lockfile",
   "buildCommand": "cd ../.. && bun run build --filter=portal",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "env": {
+    "TURBO_TELEMETRY_DISABLED": "1"
+  }
 }

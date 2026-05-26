@@ -25,6 +25,25 @@
   --radius: var(--radius-card);
 }
 
+/* ── assistant-ui CSS var overrides → SaSMaster dark tokens ── */
+[data-aui-root] {
+  --aui-background: var(--color-bg-surface);
+  --aui-foreground: var(--color-text-dark-primary);
+  --aui-muted: var(--color-bg-elevated);
+  --aui-muted-foreground: var(--color-text-dark-muted);
+  --aui-border: var(--color-border-dark);
+  --aui-input: var(--color-bg-elevated);
+  --aui-primary: var(--color-brand-lavender);
+  --aui-primary-foreground: var(--color-bg-base);
+  --aui-secondary: var(--color-bg-elevated);
+  --aui-secondary-foreground: var(--color-text-dark-secondary);
+  --aui-accent: var(--color-brand-teal-dim);
+  --aui-accent-foreground: var(--color-brand-teal);
+  --aui-destructive: var(--color-brand-coral);
+  --aui-ring: var(--color-brand-lavender);
+  --aui-radius: var(--radius-card);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

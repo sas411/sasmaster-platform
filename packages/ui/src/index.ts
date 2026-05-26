@@ -24,5 +24,10 @@ export { FilterChip } from './components/light/FilterChip'
 export { HighchartsProvider } from './components/charts/highcharts-provider'
 export { LineChart } from './components/charts/LineChart'
 
+// Dr. Scoop
+export { DrScoop } from './components/dr-scoop/DrScoop'
+export { DrScoopPanel } from './components/dr-scoop/DrScoopPanel'
+export { useDrScoopRuntime } from './hooks/useDrScoopRuntime'
+
 // Utilities
 export { cn } from './lib/utils'

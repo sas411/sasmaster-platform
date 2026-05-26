@@ -11,6 +11,7 @@ import {
   JetBrains_Mono,
 } from 'next/font/google'
 import './globals.css'
+import { QueryProvider } from '@/components/providers/QueryProvider'
 
 const bebasNeue = Bebas_Neue({
   weight: '400',
@@ -84,7 +85,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         jetbrainsMono.variable,
       ].join(' ')}
     >
-      <body style={{ background: 'var(--color-bg-base)' }}>{children}</body>
+      <body style={{ background: 'var(--color-bg-base)' }}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   )
 }

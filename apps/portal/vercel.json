@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "installCommand": "cd ../.. && npm install --legacy-peer-deps",
-  "buildCommand": "cd ../.. && npx turbo build --filter=portal",
+  "installCommand": "cd ../.. && bun install",
+  "buildCommand": "cd ../.. && bun run turbo build --filter=portal",
   "outputDirectory": ".next",
   "env": {
     "TURBO_TELEMETRY_DISABLED": "1"

@@ -1,0 +1,4 @@
+#!/bin/sh
+export PATH="$HOME/.bun/bin:$PATH"
+bun run turbo lint
+bun run turbo typecheck

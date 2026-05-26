@@ -1,0 +1,11 @@
+{
+  "name": "war-room",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'War Room migration in Phase 2'",
+    "build": "echo 'War Room migration in Phase 2'",
+    "lint": "echo 'no-op'",
+    "typecheck": "echo 'no-op'"
+  }
+}

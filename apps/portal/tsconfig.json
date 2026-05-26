@@ -1,0 +1,16 @@
+{
+  "extends": "@sasmaster/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@sasmaster/ui": ["../../packages/ui/src"],
+      "@sasmaster/ui/*": ["../../packages/ui/src/*"],
+      "@sasmaster/tokens": ["../../packages/tokens/src"],
+      "@sasmaster/types": ["../../packages/types/src"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

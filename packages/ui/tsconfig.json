@@ -1,0 +1,11 @@
+{
+  "extends": "@sasmaster/tsconfig/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "@sasmaster/types": ["../types/src"],
+      "@sasmaster/tokens": ["../tokens/src"]
+    }
+  },
+  "include": ["src", ".storybook"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}

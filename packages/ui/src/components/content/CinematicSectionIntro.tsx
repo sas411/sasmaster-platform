@@ -136,6 +136,7 @@ export function CinematicSectionIntro({
       }
       const container = containerRef.current
       if (!container || !gsapRef.current) {
+        setVisible(false)
         onEnter(cardIndex)
         return
       }
@@ -143,7 +144,7 @@ export function CinematicSectionIntro({
         opacity: 0,
         duration: 0.4,
         ease: 'power2.in',
-        onComplete: () => onEnter(cardIndex),
+        onComplete: () => { setVisible(false); onEnter(cardIndex) },
       })
     },
     [exiting, storageKey, onEnter],

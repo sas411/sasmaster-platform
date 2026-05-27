@@ -27,7 +27,43 @@ export { LineChart } from './components/charts/LineChart'
 // Dr. Scoop
 export { DrScoop } from './components/dr-scoop/DrScoop'
 export { DrScoopPanel } from './components/dr-scoop/DrScoopPanel'
+export { DrScoopCommentaryCard } from './components/dr-scoop/DrScoopCommentaryCard'
+export type { DrScoopCommentaryCardProps, CommentaryVariant } from './components/dr-scoop/DrScoopCommentaryCard'
 export { useDrScoopRuntime } from './hooks/useDrScoopRuntime'
+
+// KPI
+export { KPICard } from './components/kpi/KPICard'
+export type { KPICardProps, KPIVariant, DeltaType } from './components/kpi/KPICard'
+
+// Research Portal — Content components
+export { TitleHeroCard } from './components/content/TitleHeroCard'
+export type { TitleHeroCardProps } from './components/content/TitleHeroCard'
+export { CastStrip } from './components/content/CastStrip'
+export type { CastStripProps, CastMember } from './components/content/CastStrip'
+export { TrailerModal } from './components/content/TrailerModal'
+export type { TrailerModalProps } from './components/content/TrailerModal'
+export { TabNavBar } from './components/content/TabNavBar'
+export type { TabNavBarProps, TabItem } from './components/content/TabNavBar'
+export { CinematicSectionIntro } from './components/content/CinematicSectionIntro'
+export type { CinematicSectionIntroProps, ThumbnailCard } from './components/content/CinematicSectionIntro'
+
+// Research Portal — Charts (Highcharts)
+export { GenreBubbleChart } from './components/charts/GenreBubbleChart'
+export type { GenreBubbleChartProps, BubblePoint } from './components/charts/GenreBubbleChart'
+export { ViewingHabitsBar } from './components/charts/ViewingHabitsBar'
+export type { ViewingHabitsBarProps, ViewingSegmentData } from './components/charts/ViewingHabitsBar'
+
+// Research Portal — Charts (D3)
+export { SankeyFlow } from './components/charts/d3/SankeyFlow'
+export type { SankeyFlowProps, SankeyNode, SankeyLink } from './components/charts/d3/SankeyFlow'
+export { GenreStreamgraph } from './components/charts/d3/GenreStreamgraph'
+export type { GenreStreamgraphProps, StreamDataPoint } from './components/charts/d3/GenreStreamgraph'
+
+// Report
+export { ExportButton } from './components/report/ExportButton'
+
+// Hover Preview
+export { HoverPreviewPanel } from './components/content/HoverPreviewPanel'
 
 // Utilities
 export { cn } from './lib/utils'

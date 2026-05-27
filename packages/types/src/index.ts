@@ -16,4 +16,18 @@ export type {
   ExchangeFilters,
   ListingStatus,
   ListingSide,
+  // Research Portal
+  DrScoopCardData,
+  SankeyNodeData,
+  SankeyLinkData,
+  NetworkSankeyData,
+  StreamWeekPoint,
+  ViewingDemoData,
+  NetworkAudienceData,
+  ShowBubblePoint,
+  ShowBubbleData,
+  TitleCastMember,
+  TitleAudienceData,
+  RelatedShow,
+  TitleDetailData,
 } from './api'

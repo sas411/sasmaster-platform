@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { AnimatePresence, motion } from 'framer-motion'
 import { NavBar, HighchartsProvider, DrScoop, useDrScoopRuntime } from '@sasmaster/ui'
 import type { NavSection } from '@sasmaster/types'
 
@@ -36,7 +37,18 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
     <HighchartsProvider>
       <div className="flex min-h-screen flex-col" style={{ background: 'var(--color-bg-base)' }}>
         <NavBar activeSection={activeSection} onSectionChange={handleSectionChange} />
-        <main className="flex-1 px-6 py-8">{children}</main>
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={pathname}
+            className="flex-1 px-6 py-8"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
         <DrScoop runtime={drScoopRuntime} section={activeSection} />
       </div>
     </HighchartsProvider>

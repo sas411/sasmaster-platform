@@ -15,12 +15,19 @@ export async function GET(
     return Response.json({ error: `Show not found: ${show}` }, { status: 404 })
   }
 
-  const [detail, trailerKey, cast, related] = await Promise.all([
-    getTvDetail(tmdbId),
-    getTvTrailerKey(tmdbId),
-    getTvCast(tmdbId),
-    getTvSimilar(tmdbId, network),
-  ])
+  let detail, trailerKey, cast, related
+  try {
+    ;[detail, trailerKey, cast, related] = await Promise.all([
+      getTvDetail(tmdbId),
+      getTvTrailerKey(tmdbId),
+      getTvCast(tmdbId),
+      getTvSimilar(tmdbId, network),
+    ])
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('[show route]', msg)
+    return Response.json({ error: msg }, { status: 500 })
+  }
 
   const tagline   = detail.tagline || undefined
   const poster    = posterUrl(detail.poster_path)

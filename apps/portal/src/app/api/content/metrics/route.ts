@@ -1,19 +1,20 @@
 import type { ContentMetrics } from '@sasmaster/types'
+import { getMarketMetrics } from '@/lib/nielsen'
 
-// Stub data — replace with Railway proxy when /content/metrics endpoint is live
-export function GET() {
+export async function GET() {
+  const m = await getMarketMetrics()
   const data: ContentMetrics = {
-    totalViewers: 311_200_000,
-    totalViewersDelta: 0.8,
-    share: 12.4,
-    shareDelta: -1.2,
-    reach: 89_700_000,
-    reachDelta: 2.3,
-    avgMinAud: 4_200_000,
-    avgMinAudDelta: 3.1,
-    isRealTime: true,
+    totalViewers:              m.totalViewers,
+    totalViewersDelta:         m.totalViewersDelta,
+    share:                     m.share,
+    shareDelta:                m.shareDelta,
+    reach:                     m.reach,
+    reachDelta:                m.reachDelta,
+    avgMinAud:                 m.avgMinAud,
+    avgMinAudDelta:            m.avgMinAudDelta,
+    isRealTime:                m.isRealTime,
     breakoutThresholdExceeded: false,
-    updatedAt: new Date().toISOString(),
+    updatedAt:                 new Date().toISOString(),
   }
   return Response.json(data)
 }

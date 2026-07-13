@@ -79,6 +79,7 @@ export default [
       '**/build/**',
       '**/storybook-static/**',
       '**/.turbo/**',
+      '**/next-env.d.ts',
     ],
   },
 ]

@@ -1,0 +1,31 @@
+{
+  "min_score": 2,
+  "extra_keywords": {
+    "sasmaster-context": ["war room", "motherduck", "parent key", "pkid", "platform state", "brain-001"],
+    "build-discipline": ["task card", "!build", "build cycle"],
+    "s3-data-architect": ["new dataset", "s3 prefix", "locked paths", "zstd", "s3 layout", "new data source", "where should this go", "partitioning"],
+    "model-gateway": ["nemotron", "gemini", "vertex", "non-claude model", "model eval"],
+    "nielsen-sme": ["amrld", "mit file", "c3 rating", "daypart"],
+    "monitoring-alerting": ["is the data fresh", "stale", "availability grid", "late delivery"]
+  },
+  "gates": [
+    {
+      "pattern": "(?=.*sasmaster-2026)(?=.*(aws s3 (cp|sync|mv|rm)|aws s3api (put-object|delete-object|delete-objects|copy-object)|COPY\\s.+TO\\s|s5cmd (cp|mv|rm|sync)|rclone (copy|copyto|sync|move|moveto|delete)|put_object|delete_object|delete_objects|copy_object))",
+      "tools": ["Bash"],
+      "require": "s3-data-architect",
+      "reason": "writes to sasmaster-2026 are governed by the locked-paths registry"
+    },
+    {
+      "pattern": "\\b(INSERT|UPDATE|DELETE|MERGE|CREATE OR REPLACE)\\b.{0,120}(prod\\.parent_key|(^|/|\\s)parent_keys/)",
+      "tools": ["Bash"],
+      "require": "s3-data-architect",
+      "reason": "Parent Key spine mutations require the staged-MERGE doctrine"
+    },
+    {
+      "pattern": "\\b(nvidia|nemotron|gemini|vertex|nim)\\b.{0,80}\\b(api|invoke|generate|endpoint)\\b",
+      "tools": ["Bash"],
+      "require": "model-gateway",
+      "reason": "non-Claude model calls must go through the Model Gateway / Clean Room wall"
+    }
+  ]
+}

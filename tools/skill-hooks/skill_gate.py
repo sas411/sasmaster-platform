@@ -57,8 +57,8 @@ def main():
                 continue
         except re.error:
             continue
-        required = gate["require"]
-        if required in loaded:
+        required = gate.get("require")
+        if not required or required in loaded:
             continue
         sys.stderr.write(
             f"BLOCKED by skill-gate: load the '{required}' skill (Skill tool) "
@@ -71,4 +71,8 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # Fail open: an unexpected error must never block or disrupt the session.
+    try:
+        sys.exit(main())
+    except Exception:
+        sys.exit(0)

@@ -43,8 +43,15 @@ if [ ! -f "$SETTINGS" ]; then echo '{}' > "$SETTINGS"; fi
 BACKUP="$SETTINGS.pre-skill-hooks.$(date +%Y%m%d-%H%M%S).bak"
 cp "$SETTINGS" "$BACKUP"
 TMP="$(mktemp)"
+# Idempotent merge: strip any prior copies of our entries (identified by the
+# SaSMaster/hooks/ path in their commands) before appending, so reinstalls
+# never duplicate hooks.
 jq --slurpfile add "$DEST/settings-hooks.json" '
-  .hooks = (.hooks // {}) |
+  .hooks = ((.hooks // {}) | with_entries(
+    .value |= map(select(
+      ([.hooks[]?.command // ""] | any(contains("SaSMaster/hooks/"))) | not
+    ))
+  )) |
   reduce ($add[0].hooks | to_entries[]) as $e (
     .;
     .hooks[$e.key] = ((.hooks[$e.key] // []) + $e.value)

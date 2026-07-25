@@ -53,4 +53,8 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # Fail open: an unexpected error must never disrupt the session.
+    try:
+        sys.exit(main())
+    except Exception:
+        sys.exit(0)

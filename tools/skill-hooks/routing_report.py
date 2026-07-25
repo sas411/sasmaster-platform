@@ -34,6 +34,7 @@ def main():
         "%Y-%m-%dT%H:%M:%S", time.localtime(time.time() - args.since * 86400)
     )
     sessions = defaultdict(lambda: {"suggested": set(), "loaded": set()})
+    skipped_no_session = 0
     try:
         with open(args.log) as f:
             for line in f:
@@ -44,6 +45,13 @@ def main():
                 if o.get("ts", "") < cutoff:
                     continue
                 sid = o.get("session", "")
+                if not sid:
+                    skipped_no_session += 1
+                    continue
+                if sid.startswith("__"):
+                    # reserved for synthetic sessions (e.g. install.sh's
+                    # smoke test) — never real usage, exclude from stats
+                    continue
                 if o.get("event") == "suggested":
                     sessions[sid]["suggested"].update(o.get("skills", []))
                 elif o.get("event") == "loaded":
@@ -54,6 +62,8 @@ def main():
 
     if not sessions:
         print(f"no routing events in the last {args.since}d")
+        if skipped_no_session:
+            print(f"  ({skipped_no_session} events skipped: missing session_id)")
         return 0
 
     ignored = Counter()   # suggested, never loaded
@@ -71,6 +81,8 @@ def main():
     hit = (sum(followed.values()) / n_sugg * 100) if n_sugg else 0.0
 
     print(f"SKILL ROUTING REPORT — last {args.since}d, {len(sessions)} sessions")
+    if skipped_no_session:
+        print(f"  WARNING: {skipped_no_session} events skipped (missing session_id, excluded from stats)")
     print(f"  suggestion follow-rate: {hit:.0f}% ({sum(followed.values())}/{n_sugg})")
     print("  suggested but NOT loaded (weak injection / false-positive keyword):")
     for sk, n in ignored.most_common(10):

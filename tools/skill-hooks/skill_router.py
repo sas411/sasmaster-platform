@@ -62,7 +62,7 @@ def main():
             if not kw:
                 continue
             if " " in kw:
-                if kw in prompt:
+                if re.search(r"\b" + re.escape(kw) + r"\b", prompt):
                     score += 3
             elif re.search(r"\b" + re.escape(kw) + r"\b", prompt):
                 score += 1

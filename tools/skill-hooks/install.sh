@@ -40,17 +40,27 @@ python3 "$DEST/generate_routing_table.py" "${SKILL_DIRS[@]}" \
 
 # Merge hooks into user settings: append our entries per event, never replace.
 if [ ! -f "$SETTINGS" ]; then echo '{}' > "$SETTINGS"; fi
-BACKUP="$SETTINGS.pre-skill-hooks.$(date +%Y%m%d-%H%M%S).bak"
+BACKUP="$SETTINGS.pre-skill-hooks.$(date +%Y%m%d-%H%M%S).$$.bak"
+i=0
+while [ -e "$BACKUP" ]; do
+  i=$((i + 1))
+  BACKUP="$SETTINGS.pre-skill-hooks.$(date +%Y%m%d-%H%M%S).$$-$i.bak"
+done
 cp "$SETTINGS" "$BACKUP"
 TMP="$(mktemp)"
-# Idempotent merge: strip any prior copies of our entries (identified by the
-# SaSMaster/hooks/ path in their commands) before appending, so reinstalls
-# never duplicate hooks.
+# Idempotent merge: strip any prior copies of our own hook commands (matched
+# by this kit's own script basenames, not the shared SaSMaster/hooks/ dir,
+# so other gates living in that same dir are never touched) before
+# appending, so reinstalls never duplicate hooks.
 jq --slurpfile add "$DEST/settings-hooks.json" '
+  ["skill_router.py","skill_gate.py","skill_loaded_marker.py","session_start.py"] as $kit_names |
   .hooks = ((.hooks // {}) | with_entries(
-    .value |= map(select(
-      ([.hooks[]?.command // ""] | any(contains("SaSMaster/hooks/"))) | not
-    ))
+    .value |= (
+      map(.hooks |= map(select(
+        ((.command // "") as $c | ($kit_names | any(. as $n | $c | contains($n)))) | not
+      )))
+      | map(select((.hooks // []) | length > 0))
+    )
   )) |
   reduce ($add[0].hooks | to_entries[]) as $e (
     .;
@@ -61,7 +71,7 @@ mv "$TMP" "$SETTINGS"
 say "hooks merged into $SETTINGS (backup: $BACKUP)"
 
 say "smoke test:"
-echo '{"prompt":"is the nielsen amrld data fresh or stale?","session_id":"install-test"}' \
+echo '{"prompt":"is the nielsen amrld data fresh or stale?","session_id":"__install_smoke_test__"}' \
   | python3 "$DEST/skill_router.py" "$DEST/routing-table.json" || true
 
 cat <<EOF

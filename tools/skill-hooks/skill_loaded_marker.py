@@ -26,14 +26,19 @@ def main():
     names = {skill, skill.split(":")[-1]}
 
     session_id = evt.get("session_id", "")
-    marker = os.path.join(
-        tempfile.gettempdir(), f"sasmaster-skillgate-{session_id or 'na'}"
-    )
-    try:
-        with open(marker, "a") as f:
-            f.write("\n".join(sorted(names)) + "\n")
-    except OSError:
-        pass
+    # No session_id means no marker file skill_gate.py can look up for this
+    # session specifically — writing to a shared fallback name would let
+    # this load satisfy the gate in an unrelated session, so skip the
+    # marker write entirely rather than share one across sessions.
+    if session_id:
+        marker = os.path.join(
+            tempfile.gettempdir(), f"sasmaster-skillgate-{session_id}"
+        )
+        try:
+            with open(marker, "a") as f:
+                f.write("\n".join(sorted(names)) + "\n")
+        except OSError:
+            pass
 
     log_path = os.environ.get(
         "SKILL_ROUTING_LOG",

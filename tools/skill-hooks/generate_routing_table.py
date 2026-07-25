@@ -135,6 +135,8 @@ def main():
             skills[name] = {"keywords": extract_keywords(name, desc or "")}
 
     for skill, extra in (overrides.get("extra_keywords") or {}).items():
+        if skill in disabled:
+            continue
         skills.setdefault(skill, {"keywords": []})
         merged = sorted(set(skills[skill]["keywords"]) | {k.lower() for k in extra})
         skills[skill]["keywords"] = merged[:MAX_KEYWORDS_PER_SKILL]

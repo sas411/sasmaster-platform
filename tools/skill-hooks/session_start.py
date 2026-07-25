@@ -11,6 +11,7 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 
 
 def main():
@@ -19,8 +20,9 @@ def main():
     except (ValueError, OSError):
         return 0
 
-    cwd = (evt.get("cwd") or os.getcwd()).lower()
-    if "sasmaster" not in cwd:
+    cwd = evt.get("cwd") or os.getcwd()
+    parts = {p.lower() for p in Path(cwd).parts}
+    if "sasmaster" not in parts:
         return 0
 
     print(

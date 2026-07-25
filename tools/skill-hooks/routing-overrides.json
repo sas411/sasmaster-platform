@@ -10,13 +10,13 @@
   },
   "gates": [
     {
-      "pattern": "(aws s3 (cp|sync|mv|rm)|COPY\\s.+TO\\s).*s3://sasmaster-2026",
+      "pattern": "(?=.*sasmaster-2026)(?=.*(aws s3 (cp|sync|mv|rm)|aws s3api (put-object|delete-object|delete-objects|copy-object)|COPY\\s.+TO\\s|s5cmd (cp|mv|rm|sync)|rclone (copy|copyto|sync|move|moveto|delete)|put_object|delete_object|delete_objects|copy_object))",
       "tools": ["Bash"],
       "require": "s3-data-architect",
       "reason": "writes to sasmaster-2026 are governed by the locked-paths registry"
     },
     {
-      "pattern": "\\b(INSERT|UPDATE|DELETE|MERGE|CREATE OR REPLACE)\\b.{0,120}(prod\\.parent_key|parent_keys/)",
+      "pattern": "\\b(INSERT|UPDATE|DELETE|MERGE|CREATE OR REPLACE)\\b.{0,120}(prod\\.parent_key|(^|/|\\s)parent_keys/)",
       "tools": ["Bash"],
       "require": "s3-data-architect",
       "reason": "Parent Key spine mutations require the staged-MERGE doctrine"

@@ -72,6 +72,16 @@ time regardless of description length. Do the trim as its own task card.
 
 ## Undo
 
-Restore the timestamped settings backup the installer prints, or delete the
-four skill-hook entries from `hooks` in `~/.claude/settings.json`. Remove
+Restore the timestamped settings backup `install.sh` prints (named
+`settings.json.pre-skill-hooks.<ts>.bak`), or delete the four skill-hook
+entries from `hooks` in `~/.claude/settings.json`. Remove
 `~/SaSMaster/hooks/` to drop the kit entirely.
+
+If you deployed via `deploy-mac.sh`, it takes its own backup *before* calling
+`install.sh`, so a run leaves two backups: `settings.json.pre-reenable.<ts>.bak`
+(taken first, before the 13 skills were re-enabled) and
+`settings.json.pre-skill-hooks.<ts>.bak` (taken second, by `install.sh`,
+before the hooks were merged). Restoring only the `pre-skill-hooks` backup
+undoes the hook merge but leaves the skills re-enabled; a full revert of a
+`deploy-mac.sh` run requires restoring the earlier `pre-reenable` backup
+instead.

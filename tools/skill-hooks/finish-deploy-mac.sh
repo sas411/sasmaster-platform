@@ -33,7 +33,15 @@ EOF
 fi
 
 # --- 2. cron: nightly table regen 04:45 (after 04:40 skill sync) + Sunday 07:00 report
-CRON_NOW="$(crontab -l 2>/dev/null || true)"
+CRON_ERR="$(mktemp)"
+if CRON_NOW="$(crontab -l 2>"$CRON_ERR")"; then
+  :
+elif grep -qi "no crontab for" "$CRON_ERR"; then
+  CRON_NOW=""
+else
+  fail "crontab -l failed unexpectedly ($(cat "$CRON_ERR")) — not proceeding, crontab left untouched"
+fi
+rm -f "$CRON_ERR"
 CRON_NEW="$CRON_NOW"
 if ! grep -q "generate_routing_table.py" <<< "$CRON_NOW"; then
   CRON_NEW="$CRON_NEW
@@ -52,6 +60,9 @@ else
   say "crontab already has accuracy report — skipping"
 fi
 if [ "$CRON_NEW" != "$CRON_NOW" ]; then
+  CRON_BAK="$HOME/SaSMaster/crontab.pre-skill-hooks.$(date +%Y%m%d-%H%M%S).bak"
+  printf '%s\n' "$CRON_NOW" > "$CRON_BAK"
+  say "crontab backed up to $CRON_BAK"
   printf '%s\n' "$CRON_NEW" | grep -v '^[[:space:]]*$' | crontab - || fail "crontab install failed — crontab unchanged"
   say "crontab updated"
 fi

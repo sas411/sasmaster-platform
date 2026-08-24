@@ -1,0 +1,67 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "/Users/shivashish/SaSMaster"
+      ]
+    },
+    "repomix": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "repomix",
+        "--mcp"
+      ]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "puppeteer-mcp-server"
+      ]
+    },
+    "e2b": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source ~/SaSMaster/.env; set +a; exec npx -y @e2b/mcp-server"
+      ]
+    },
+    "postman": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source ~/SaSMaster/.env; set +a; exec npx -y @postman/postman-mcp-server"
+      ]
+    },
+    "sentry": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source ~/SaSMaster/.env; set +a; exec npx -y @sentry/mcp-server"
+      ]
+    },
+    "tavily": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source ~/SaSMaster/.env; set +a; exec npx -y tavily-mcp"
+      ]
+    },
+    "llamacloud": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source ~/SaSMaster/.env; set +a; exec npx -y @llamaindex/mcp-server-llamacloud"
+      ]
+    }
+  }
+}
